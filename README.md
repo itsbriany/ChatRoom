@@ -11,6 +11,13 @@ Eventually, encryption will also be added.
 
 
 
+
+
+
+
+
+
+
 ##########################################
 RECOMMENDED
 ##########################################
@@ -27,6 +34,14 @@ http://www.boost.org/doc/libs/1_57_0/more/getting_started/unix-variants.html
 
 
 
+
+
+
+
+
+
+
+
 ##########################################
 INSTALLATION
 ##########################################
@@ -37,8 +52,21 @@ Therefore, your LD_LIBRARY_PATH environment variable should include the followin
 
 
 Optional: install boost libraries
-
 http://www.linuxfromscratch.org/blfs/view/svn/general/boost.html
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ##########################################
@@ -47,6 +75,20 @@ THIRD PARTY
 
 Boost C++ libraries
 Google C/C++ Unit Testing Framework
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ##########################################
