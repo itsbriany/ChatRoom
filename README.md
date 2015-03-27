@@ -11,6 +11,13 @@ Eventually, encryption will also be added.
 
 
 
+##########################################
+DEFINITIONS
+##########################################
+
+%ROOTDIR% => Project root directory
+
+
 
 
 
@@ -23,6 +30,8 @@ RECOMMENDED
 ##########################################
 
 Install Boost 1.57.0 C++ libraries
+
+You can install the libraries with the install script %ROOTDIR%/libs/buildLibs.sh
 
 This is recommended because you may want to use a boost library that has not yet been
 included in the project. If you do not have Boost 1.57.0 C++ libraries installed, then
@@ -50,9 +59,7 @@ This project uses Boost 1.57.0 C++ libraries.
 Therefore, your LD_LIBRARY_PATH environment variable should include the following path:
 %PROJECTDIRECTORY%/libs
 
-
-Optional: install boost libraries
-http://www.linuxfromscratch.org/blfs/view/svn/general/boost.html
+It is also highly recommended to update your compiler build path
 
 
 
