@@ -1,10 +1,4 @@
-#include <boost/system/error_code.hpp>
-#include <boost/system/system_error.hpp>
-#include <boost/asio/ip/tcp.hpp>
-#include <iostream>
+#include "Server.hh"
 
-int main()
-{
-	std::cout << "This works!" << std::endl;	
-	return 0;
-}
+Server::Server() { }
+

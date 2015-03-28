@@ -1,11 +1,11 @@
+include env.mk
+
 CXX=g++
 VERSION=-std=c++14
-FLAGS=-Wall -Werror -Wextra
-INCLUDES=-I/home/itsbriany/workbench/libs/boost_1_57_0/
-LINKDIR=-L/home/itsbriany/workbench/libs/boost_1_57_0/stage/lib
-BOOST=-lboost_system
+FLAGS=-g -Wall -Werror
+BOOST=-lpthread -lboost_system -lboost_log -lboost_filesystem -lboost_date_time -lboost_thread -lboost_regex
 
-OBJS = Server.o
+OBJS = Logger.o
 
 all: $(OBJS)
 
