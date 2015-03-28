@@ -3,7 +3,7 @@
 #include <boost/asio/ip/tcp.hpp>
 #include <iostream>
 
-int main(int argc, char const* argv[])
+int main()
 {
 	std::cout << "This works!" << std::endl;	
 	return 0;
