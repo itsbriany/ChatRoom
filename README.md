@@ -1,6 +1,6 @@
 # ChatRoom
 
-##ABOUT
+####ABOUT
 
 The plan is to build a multi chatroom that acts as a service where clients can connect from anywhere.
 Eventually, encryption will also be added.
@@ -9,7 +9,7 @@ Eventually, encryption will also be added.
 
 
 
-##DEFINITIONS
+####DEFINITIONS
 
 %ROOTDIR% => Project root directory
 
@@ -20,7 +20,7 @@ Eventually, encryption will also be added.
 
 
 
-##RECOMMENDED
+####RECOMMENDED
 
 Install Boost 1.57.0 C++ libraries
 
@@ -44,7 +44,7 @@ http://www.boost.org/doc/libs/1_57_0/more/getting_started/unix-variants.html
 
 
 
-##INSTALLATION
+####INSTALLATION
 
 This project uses Boost 1.57.0 C++ libraries.
 Therefore, your LD_LIBRARY_PATH environment variable should include the following path:
@@ -67,7 +67,7 @@ It is also highly recommended to update your compiler build path
 
 
 
-##THIRD PARTY
+####THIRD PARTY
 
 Boost C++ libraries
 Google C/C++ Unit Testing Framework
@@ -87,7 +87,7 @@ Google C/C++ Unit Testing Framework
 
 
 
-##SOFTWARE VERSIONS
+####SOFTWARE VERSIONS
 
 This project was compiled with g++ 4.8.2 
 The supported C++ version is C++14
