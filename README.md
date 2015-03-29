@@ -23,7 +23,7 @@ Eventually, encryption will also be added.
 
 * If you are doing a system install of boost, then it is recommended that your LD_LIBRARY_PATH environment variable should include the path to your boost shared objects directory. 
 
-* **Make sure to modify the %ROOTDIR%/src/env.mk file so that your copmiler can find the boost source code and the linker can link to the boost shared objects!**
+* **Make sure to modify the %ROOTDIR%/templates/env.mk file and copy/symlink it to your %ROOTDIR%/src directory so that your copmiler can find the boost source code and the linker can link to the boost shared objects!**
 
 * If you are having any trouble with installing boost, there is some documentation here:
 http://www.boost.org/doc/libs/1_57_0/more/getting_started/unix-variants.html
