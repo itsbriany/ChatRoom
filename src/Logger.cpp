@@ -1,13 +1,6 @@
 #include "Logger.hpp"
 
-#include <boost/assign/list_of.hpp>
-#include <boost/log/core.hpp>
-#include <boost/log/trivial.hpp>
-#include <boost/log/expressions.hpp>
-#include <boost/log/utility/setup/common_attributes.hpp>
-
-
-// Set up log mapping
+// Static initialization
 std::map<Logger::LogLevel, std::string> Logger::st_mapStrToLevel = boost::assign::map_list_of
 	(Logger::eTrace, "trace")
 	(Logger::eDebug, "debug")
@@ -24,10 +17,7 @@ std::map<std::string, Logger::LogLevel> Logger::st_mapLevelToStr = boost::assign
 	("error", Logger::eError)
 	("fatal", Logger::eFatal);
 
-//--------------------------------------------------------------------------------------------------
-// Constructor
-Logger::Logger() : m_logLevel("debug") { }
-
+Logger::LogLevel Logger::st_logLevel = Logger::eDebug;  
 
 //--------------------------------------------------------------------------------------------------
 // Interface
@@ -40,7 +30,8 @@ Logger::setLogLevel(const Logger::LogLevel& lvl) {
 	boost::log::add_common_attributes();
 	
 	// Set the filter level here
-	
+  st_logLevel = lvl;
+
 	switch (lvl) {
 		case eTrace:
 			boost::log::core::get()->set_filter
@@ -49,22 +40,41 @@ Logger::setLogLevel(const Logger::LogLevel& lvl) {
 			);
 			break;
 
+		case eInfo:
+			boost::log::core::get()->set_filter
+			(
+				boost::log::trivial::severity >= boost::log::trivial::info	
+			);
+			break;
+
+		case eWarning:
+			boost::log::core::get()->set_filter
+			(
+				boost::log::trivial::severity >= boost::log::trivial::warning	
+			);
+			break;
+
+		case eError:
+			boost::log::core::get()->set_filter
+			(
+				boost::log::trivial::severity >= boost::log::trivial::error	
+			);
+			break;
+
+		case eFatal:
+			boost::log::core::get()->set_filter
+			(
+				boost::log::trivial::severity >= boost::log::trivial::fatal	
+			);
+			break;
+
 		default:
-			m_logLevel = "debug";
-      lvl = ::eDebug;
+			boost::log::core::get()->set_filter
+			(
+				boost::log::trivial::severity >= boost::log::trivial::debug	
+			);
+      st_logLevel = Logger::eDebug;
 			break;
 	}
-		m_logLevel = ::st_mapLevelToStr[lvl];
-		
 
-}
-
-int main()
-{
-	Logger logger;
-	logger.setLogLevel("warning");
-
-	BOOST_LOG_TRIVIAL(error) << "Blah!";
-	BOOST_LOG_TRIVIAL(trace) << "Blah!";
-	return 0;
 }

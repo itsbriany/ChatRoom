@@ -1,4 +1,17 @@
-#include "Server.hh"
+#include "Server.hpp"
+#include "Logger.hpp"
 
-Server::Server() { }
+//-----------------------------------------------------------------------------
+// Constructor
+Server::Server() {
+}
 
+
+//-----------------------------------------------------------------------------
+// Interface
+
+void
+Server::run() {
+	
+
+}

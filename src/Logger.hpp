@@ -4,7 +4,13 @@
 
 #include <string>
 #include <map>
+
+#include <boost/assign/list_of.hpp>
+#include <boost/log/core.hpp>
 #include <boost/log/trivial.hpp>
+#include <boost/log/expressions.hpp>
+#include <boost/log/utility/setup/common_attributes.hpp>
+
 
 class Logger {
 
@@ -19,33 +25,26 @@ class Logger {
 				eFatal
 			};
 
-
-			//::---------------------------------------------------
-			//::	Constructor
-			//::---------------------------------------------------
-
-			Logger();
-
-
 			//::---------------------------------------------------
 			//::	Interface
 			//::---------------------------------------------------
 			
+      // Set the global log level
 			static void setLogLevel(const LogLevel& lvl);
+
+			// Get the log level
+			static LogLevel getLogLevel() {
+				return st_logLevel;		
+			}
 		
 
     private:
 
 			//::---------------------------------------------------
-			//::	Private Interface
-			//::---------------------------------------------------
-      
-
-			//::---------------------------------------------------
 			//::	Member Variables
 			//::---------------------------------------------------
 
-			std::string m_logLevel;
+			static LogLevel st_logLevel;
 
 
     public:
