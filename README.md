@@ -50,7 +50,7 @@ http://www.boost.org/doc/libs/1_57_0/more/getting_started/unix-variants.html
 ####Third Party
 
 * Boost C++ libraries
-*Google C/C++ Unit Testing Framework
+* Google C/C++ Unit Testing Framework
 
 
 
