@@ -17,9 +17,6 @@ Eventually, encryption will also be added.
 
 
 
-
-
-
 ####Installation
 
 * This project uses Boost 1.57.0 C++ libraries.
@@ -34,14 +31,20 @@ http://www.boost.org/doc/libs/1_57_0/more/getting_started/unix-variants.html
 * This project uses C++14 features so make sure you have an up to date compiler (g++ 4.9.1+ recommended).
 
 
+####Third Party
+
+* Boost C++ libraries
+* Google C/C++ Unit Testing Framework
 
 
 
 
 
 
+####Software Versions
 
-
+* This project is compiled with g++ 4.9.1+ 
+* The supported C++ version is C++14
 
 
 
@@ -51,6 +54,7 @@ http://www.boost.org/doc/libs/1_57_0/more/getting_started/unix-variants.html
 
 * Boost C++ libraries
 * Google C/C++ Unit Testing Framework
+
 
 
 
