@@ -6,6 +6,7 @@ FLAGS=-g -Wall -Werror
 BOOST=-lpthread -lboost_system -lboost_log -lboost_filesystem -lboost_date_time -lboost_thread -lboost_regex
 
 OBJS = \
+       TcpConnection.o \
 			 Server.o \
 			 AppMain.o \
        Logger.o 
@@ -15,9 +16,9 @@ BINARY = ChatRoomServer
 all: main 
 
 main: $(OBJS)
-	$(CXX) *.o -o	$(BINARY) $(LINKDIR) $(BOOST)
+	$(CXX) $(OBJS) -o	$(BINARY) $(LINKDIR) $(BOOST)
 
-$(OBJS): %.o: %.cpp
+$(OBJS): %.o: %.cpp %.hpp
 	$(CXX) -c $(INCLUDES) $(VERSION) $(FLAGS) $< 
 	
 
