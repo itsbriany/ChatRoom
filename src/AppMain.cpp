@@ -18,6 +18,8 @@ AppMain::run() {
     // The server will listen for incoming TcpConnections on port 6060
     Server server(*m_ioService, 6060U);
 
+    BOOST_LOG_TRIVIAL(info) << *this << "Listening on port " << server.getPort();
+
     // Register signals for process termination
     boost::asio::signal_set signals(*m_ioService, SIGINT, SIGTERM);
 

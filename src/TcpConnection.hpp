@@ -46,13 +46,18 @@ class TcpConnection : public std::enable_shared_from_this<TcpConnection> {
 		}
 
   protected:
-		//::---------------------------------------------------
+    //::---------------------------------------------------
 		//::	Protected Interface
 		//::---------------------------------------------------
   
     // Handle writing data to the socket
     virtual void pro_handleWrite(const boost::system::error_code& error,
                                  std::size_t bufferSize);
+
+    
+    // Handle reading data from the socket
+    virtual void pro_handleRead(const boost::system::error_code& error);
+
 
 
   private:
@@ -63,7 +68,7 @@ class TcpConnection : public std::enable_shared_from_this<TcpConnection> {
 		TcpConnection(boost::asio::io_service& io_service);
 
 
-		//::---------------------------------------------------
+    //::---------------------------------------------------
 		//::	Member Variables
 		//::---------------------------------------------------
   
@@ -75,6 +80,7 @@ class TcpConnection : public std::enable_shared_from_this<TcpConnection> {
 
     std::string m_message;
 
-    boost::asio::mutable_buffer m_buffer;
+    // The given response from the client
+    boost::asio::streambuf m_response;
 
 };
