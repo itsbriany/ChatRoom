@@ -1,4 +1,4 @@
 src/*.o
-src/ChatRoom
+src/ChatRoomServer
 src/env.mk
 .clang_complete
