@@ -19,6 +19,7 @@ Server::Server(boost::asio::io_service& io_service, unsigned short port) :
 void
 Server::startAccept() {
   // Create a new connection 
+  /*
   TcpConnection::pointer newConnection = TcpConnection::create(m_acceptor.get_io_service()); 
 
   // Perform an asynchronous accept operation to wait for a new connection
@@ -26,6 +27,7 @@ Server::startAccept() {
                           boost::bind(&Server::prv_handleAccept, this,
                                       newConnection,
                                       boost::asio::placeholders::error));
+                                      */
 }
 
 //-----------------------------------------------------------------------------
@@ -64,7 +66,7 @@ Server::prv_handleAccept(TcpConnection::pointer newConnection,
   }  
 
   // Start the new TcpConnection
-  newConnection->start();
+  newConnection->startConnection();
 
   // Try an async_connect with the socket
   /*
