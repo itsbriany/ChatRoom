@@ -1,17 +1,23 @@
+#pragma once
+
+#include "TcpConnection.hpp"
+
+#include <vector>
 #include <iostream>
 #include <string>
 #include <boost/asio.hpp>
 
-#include "TcpConnection.hpp"
-
-class Server {
+// Every time a new Server is created, can only be a shared pointer
+class Server : public std::enable_shared_from_this<Server> {
 
 	public:
 		//::---------------------------------------------------
-		//::	Constructor
+		//::	Constructor/Destructor
 		//::---------------------------------------------------
   
 		Server(boost::asio::io_service& io_service, unsigned short port);
+
+    virtual ~Server();
 
     //::---------------------------------------------------
     //::	Interface
@@ -39,36 +45,30 @@ class Server {
 			return os << server.getAsString();	
 		}
 
-  protected:
-		//::---------------------------------------------------
-		//::  Protected Interface	
-		//::---------------------------------------------------
-    
-    // Handle an asynchronous connection initiated from the server side
-    virtual void pro_handleConnect(const boost::system::error_code& error);
-
-    // Handle on reading data asynchronously
-    virtual void pro_handleRead(std::ostringstream& buffer,
-                                const boost::system::error_code& error);
-
-
   private:
 		//::---------------------------------------------------
 		//::  Private Interface	
 		//::---------------------------------------------------
 
-    // Event handle when an incoming connection is accepted
-    void prv_handleAccept(TcpConnection::pointer pConnection,
-                          const boost::system::error_code& /* error */);
+    void prv_handleAccept(const boost::system::error_code& error);
 
 		//::---------------------------------------------------
 		//::	Member Variables
 		//::---------------------------------------------------
   
+    // The server's io_service
+    boost::asio::io_service &m_ioService;
+
     // The port number to listen on
     unsigned short m_port;
 
     // Accept incoming TCP connections
     boost::asio::ip::tcp::acceptor m_acceptor;
+
+    // A stream buffer for read input
+    boost::asio::streambuf m_buf;
+
+    // The socket that will be moved around to different clients
+    boost::asio::ip::tcp::socket m_socket;
 
 };
