@@ -3,7 +3,10 @@
 
 //-----------------------------------------------------------------------------------
 // Constructor
-ChatSession::ChatSession(boost::asio::ip::tcp::socket socket) : m_socket(std::move(socket)) {
+ChatSession::ChatSession(std::string clientName, boost::asio::ip::tcp::socket socket) : 
+  BaseClass(clientName),
+  m_socket(std::move(socket))
+{
   BOOST_LOG_TRIVIAL(debug) << *this << "Created";
 }
 
@@ -13,10 +16,28 @@ ChatSession::~ChatSession() {
 }
 
 //-----------------------------------------------------------------------------------
+// Participant override Interface
+void
+ChatSession::deliver(std::string &message) {
+  ChatSessionPtr sharedSelf(shared_from_this());
+  //m_socket.async_write_some(boost::asio::buffer(message, message.size()),);
+}
+
+// Receives incoming messages
+void
+ChatSession::listen(std::string &message) {
+
+}
+
+
+//-----------------------------------------------------------------------------------
 // Interface
 void
 ChatSession::start() {
-  prv_readMessages();
+  // Listen for messages in the room
+  std::string greeting(getName() + " has joined in");
+  listen(greeting);
+  deliver(greeting);
 }
 
 //-----------------------------------------------------------------------------------

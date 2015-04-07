@@ -1,18 +1,34 @@
 #pragma once
 
 #include "Server.hpp"
+#include "Participant.hpp"
 
-class ChatSession : public std::enable_shared_from_this<ChatSession> {
+class ChatSession : public Participant, public std::enable_shared_from_this<ChatSession> {
   
+  private:
+    typedef Participant BaseClass;
+
   public:
+    typedef std::shared_ptr<ChatSession> ChatSessionPtr;
+
 		//::---------------------------------------------------
 		//::	Constructor/Destructor
 		//::---------------------------------------------------
 
-    ChatSession(boost::asio::ip::tcp::socket socket);
+    ChatSession(std::string client_name, boost::asio::ip::tcp::socket socket);
 
     ~ChatSession();
     
+		//::---------------------------------------------------
+		//:: Participant Override Interface
+		//::---------------------------------------------------
+
+    // Send a message
+    void deliver(std::string& message);
+
+    // Get a message
+    void listen(std::string& message);
+
 		//::---------------------------------------------------
 		//:: Interface
 		//::---------------------------------------------------
@@ -20,6 +36,9 @@ class ChatSession : public std::enable_shared_from_this<ChatSession> {
     // Start the session
     void start();
 
+    boost::asio::ip::tcp::socket& getSocket() {
+      return m_socket; 
+    }
 
     // Output as string
     std::string getAsString() {
@@ -52,8 +71,10 @@ class ChatSession : public std::enable_shared_from_this<ChatSession> {
 		//:: Member Variables	
 		//::---------------------------------------------------
 
+    // The socket that this sessions uses to send/receive
     boost::asio::ip::tcp::socket m_socket;
 
+    // TODO Still questionable; Should probably abstract this into a message obj
     boost::asio::streambuf m_buf;
 
 };

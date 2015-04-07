@@ -50,8 +50,8 @@ Server::prv_handleAccept(const boost::system::error_code &error) {
     The session should take a socket
   */
   // Use move because we get a reference to a delete function if not
-  std::shared_ptr<ChatSession> session(new ChatSession(std::move(m_socket)));
-  session->start();
+  //std::shared_ptr<ChatSession> session(new ChatSession(std::move(m_socket)));
+  //session->start();
 
   startAccept();
 

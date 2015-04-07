@@ -6,6 +6,8 @@ FLAGS=-g -Wall -Werror
 BOOST=-lpthread -lboost_locale -lboost_system -lboost_log -lboost_filesystem -lboost_date_time -lboost_thread -lboost_regex
 
 OBJS = \
+       Participant.o \
+       ChatRoom.o \
        ChatSession.o \
        TcpConnection.o \
 			 Server.o \
