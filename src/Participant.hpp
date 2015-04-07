@@ -15,7 +15,7 @@ class Participant {
 
     Participant(std::string name);
 
-    ~Participant();
+    virtual ~Participant();
     
 		//::---------------------------------------------------
 		//:: Pure Virtual Interface
@@ -29,7 +29,7 @@ class Participant {
 		//::---------------------------------------------------
 		//:: Interface
 		//::---------------------------------------------------
-    
+
     unsigned int getId() const {
       return m_id; 
     }

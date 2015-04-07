@@ -17,10 +17,23 @@ ChatSession::~ChatSession() {
 
 //-----------------------------------------------------------------------------------
 // Participant override Interface
+
+// Write a message to the socket
 void
 ChatSession::deliver(std::string &message) {
-  ChatSessionPtr sharedSelf(shared_from_this());
-  //m_socket.async_write_some(boost::asio::buffer(message, message.size()),);
+  m_socket.async_write_some(boost::asio::buffer(message, message.size()),
+      [this](const boost::system::error_code& error, std::size_t bytesTransferred){
+        
+        if (error) {
+          // Might want to specify the error here to that an expected error
+          // Can be handled
+          BOOST_LOG_TRIVIAL(error) << *this << error.message();
+          //Leave the room that this session belongs to
+        } 
+        
+        // TODO Add this message to the chat room so that it can be broadcasted
+
+      });
 }
 
 // Receives incoming messages

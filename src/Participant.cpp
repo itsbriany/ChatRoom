@@ -19,3 +19,4 @@ Participant::~Participant() {
   BOOST_LOG_TRIVIAL(info) << *this << "Left the chat room";
   st_totalId--;
 }
+
