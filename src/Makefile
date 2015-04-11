@@ -7,10 +7,10 @@ BOOST=-lpthread -lboost_locale -lboost_system -lboost_log -lboost_filesystem -lb
 
 OBJS = \
        Participant.o \
-       ChatRoom.o \
        ChatSession.o \
-       TcpConnection.o \
+       ChatRoom.o \
 			 Server.o \
+       TcpConnection.o \
 			 AppMain.o \
        Logger.o 
 

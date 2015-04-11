@@ -1,11 +1,13 @@
 #pragma once
 
-#include "TcpConnection.hpp"
+#include "ChatRoom.hpp"
 
 #include <vector>
 #include <iostream>
 #include <string>
 #include <boost/asio.hpp>
+
+class ChatRoom;
 
 // Every time a new Server is created, can only be a shared pointer
 class Server : public std::enable_shared_from_this<Server> {
@@ -70,5 +72,8 @@ class Server : public std::enable_shared_from_this<Server> {
 
     // The socket that will be moved around to different clients
     boost::asio::ip::tcp::socket m_socket;
+
+    // The chatroom
+    ChatRoom m_chatRoom;
 
 };

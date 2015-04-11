@@ -1,6 +1,7 @@
 #include "Server.hpp"
 #include "Logger.hpp"
 #include "ChatSession.hpp"
+
 #include <boost/bind.hpp>
 #include <boost/asio.hpp>
 
@@ -28,7 +29,7 @@ void
 Server::startAccept() {
 
   m_acceptor.async_accept(m_socket, boost::bind(&Server::prv_handleAccept,
-                                      this,
+                                      shared_from_this(),
                                       boost::asio::placeholders::error));
 }
 
@@ -45,15 +46,25 @@ Server::prv_handleAccept(const boost::system::error_code &error) {
 
   BOOST_LOG_TRIVIAL(debug) << *this << "Connection Accepted";  
 
+
+  // For now just use one chat room
+  // Start a session with an unknown name for now
+  // Might want to set the name to user + id for those with no name
+  
+  std::shared_ptr<ChatSession> session(new ChatSession(
+                                          std::string("user " + m_chatRoom.getParticipants()),
+                                          std::move(m_socket)));
+
+  // Add this new participant to the chatroom
+  m_chatRoom.join(*session);
   /*
     Create a new chat session
     The session should take a socket
   */
-  // Use move because we get a reference to a delete function if not
-  //std::shared_ptr<ChatSession> session(new ChatSession(std::move(m_socket)));
+  // Use move because socket is not copyable 
   //session->start();
 
-  startAccept();
+  //startAccept();
 
 }
 

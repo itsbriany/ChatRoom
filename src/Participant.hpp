@@ -6,6 +6,7 @@
 #include <iostream>
 #include <sstream>
 
+
 class Participant {
   
   public:
@@ -58,8 +59,10 @@ class Participant {
 		//:: Member Variables	
 		//::---------------------------------------------------
 
+    // The participant's name
     std::string m_name;
     
+    // Th participant's unique ID
     unsigned short m_id;
 
     // The total number of existing participants

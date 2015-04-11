@@ -3,6 +3,8 @@
 #include "Server.hpp"
 #include "Participant.hpp"
 
+#include <boost/asio.hpp>
+
 class ChatSession : public Participant, public std::enable_shared_from_this<ChatSession> {
   
   private:

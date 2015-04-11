@@ -3,6 +3,11 @@
 #include <boost/bind.hpp>
 
 //-------------------------------------------------------------------------------
+// Static Initialization
+
+uint32_t ChatRoom::st_participantCount = 0;
+
+//-------------------------------------------------------------------------------
 // Constructor
 ChatRoom::ChatRoom() : m_greetingMessage("A new participant has joined the room!") {
   BOOST_LOG_TRIVIAL(debug) << *this << "Created"; 
@@ -27,20 +32,25 @@ ChatRoom::getAsString() {
 
 // Let a new participant join
 void
-ChatRoom::join(const Participant& newSession) {
-  // Broadcast a message to all chat sessions
-  /*
-  for (auto &session : m_sessionSet) {
-    //deliver(session, m_greetingMessage); 
-  }
-  */
+ChatRoom::join(Participant& newParticipant) {
+  st_participantCount++;
 }
+
+
+// Broadcast a message to each participant in the room
+void 
+ChatRoom::broadcast(const std::string& msg) {
+  for (auto &participant : m_participantVector) {
+    participant.deliver(m_greetingMessage); 
+  }
+}
+
 
 //-------------------------------------------------------------------------------
 // Private Interface
 
 void
-ChatRoom::prv_handleDeliver(const boost::system::error_code &error) {
+ChatRoom::prv_handleDeliver(const Participant& target, const boost::system::error_code &error) {
 
   if (error) {
     BOOST_LOG_TRIVIAL(error) << *this << error.message();
