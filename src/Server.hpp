@@ -10,53 +10,59 @@
 class ChatRoom;
 
 // Every time a new Server is created, can only be a shared pointer
-class Server : public std::enable_shared_from_this<Server> {
+class Server {
 
-	public:
-		//::---------------------------------------------------
-		//::	Constructor/Destructor
-		//::---------------------------------------------------
-  
-		Server(boost::asio::io_service& io_service, unsigned short port);
+public:
+    //::---------------------------------------------------
+    //::	Constructor/Destructor
+    //::---------------------------------------------------
+
+    Server(boost::asio::io_service &io_service, unsigned short port);
 
     virtual ~Server();
 
+
+public:
     //::---------------------------------------------------
     //::	Interface
-		//::---------------------------------------------------
+    //::---------------------------------------------------
 
     // Get this object as a string
     std::string getAsString() {
-			return std::string("[Server]: ");		
-		}
+        return std::string("[Server]: ");
+    }
 
     // Get the port number that the server is listening on
     unsigned short getPort() {
-      return m_port;  
+        return m_port;
     }
 
     //Create a socket an initiate an asynchronous accept operation to wait for a new connection
     void startAccept();
-    
 
-		//::---------------------------------------------------
-		//::	Logger
-		//::---------------------------------------------------
 
-		friend std::ostream& operator<<(std::ostream& os, Server& server) {
-			return os << server.getAsString();	
-		}
+private:
+    //::---------------------------------------------------
+    //::	Logger
+    //::---------------------------------------------------
 
-  private:
-		//::---------------------------------------------------
-		//::  Private Interface	
-		//::---------------------------------------------------
+    friend std::ostream &operator<<(std::ostream &os, Server &server) {
+        return os << server.getAsString();
+    }
+
+
+private:
+    //::---------------------------------------------------
+    //::  Private Interface
+    //::---------------------------------------------------
 
     void prv_handleAccept(const boost::system::error_code& error);
 
-		//::---------------------------------------------------
-		//::	Member Variables
-		//::---------------------------------------------------
+
+private:
+    //::---------------------------------------------------
+    //::	Member Variables
+    //::---------------------------------------------------
   
     // The server's io_service
     boost::asio::io_service &m_ioService;
@@ -73,7 +79,7 @@ class Server : public std::enable_shared_from_this<Server> {
     // The socket that will be moved around to different clients
     boost::asio::ip::tcp::socket m_socket;
 
-    // The chatroom
+    // The of chatroom
     ChatRoom m_chatRoom;
 
 };

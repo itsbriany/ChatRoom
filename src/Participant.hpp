@@ -1,71 +1,94 @@
 #pragma once
 
 #include "Logger.hpp"
+#include "ChatRoom.hpp"
 
 #include <string>
 #include <iostream>
 #include <sstream>
 
 
-class Participant {
-  
-  public:
-		//::---------------------------------------------------
-		//::	Constructor/Destructor
-		//::---------------------------------------------------
+class Participant : boost::noncopyable {
 
-    Participant(std::string name);
+public:
+  //::---------------------------------------------------
+  //::	Constructor/Destructor
+  //::---------------------------------------------------
 
-    virtual ~Participant();
-    
-		//::---------------------------------------------------
-		//:: Pure Virtual Interface
-		//::---------------------------------------------------
+  Participant(std::string name, ChatRoom &chatRoom);
 
-    // Deliver a message to those in the given chat room
-    virtual void deliver(std::string& msg) = 0;
+  virtual ~Participant();
 
-    virtual void listen(std::string& msg) = 0;
 
-		//::---------------------------------------------------
-		//:: Interface
-		//::---------------------------------------------------
+public:
+  //::---------------------------------------------------
+  //:: Pure Virtual Interface
+  //::---------------------------------------------------
 
-    unsigned int getId() const {
-      return m_id; 
-    }
+  // Deliver a message to those in the given chat room
+  virtual void deliver(const std::string &msg) = 0;
 
-    std::string getName() const {
-      return m_name; 
-    }
+  // Listen for a message from other participants
+  virtual void listen(std::string &msg) = 0;
 
-    // Output as string
-    std::string getAsString() {
-      std::ostringstream oss;
-      oss << '[' << m_name << "]: ";
-      return oss.str();
-    }
+  // Join a chat room
+  virtual void join(ChatRoom &chatRoom) = 0;
 
-		//::---------------------------------------------------
-		//:: Logging
-		//::---------------------------------------------------
 
-    friend std::ostream& operator<<(std::ostream& lhs, Participant& participant) {
-      return lhs << participant.getAsString(); 
-    }
+public:
+  //::---------------------------------------------------
+  //:: Interface
+  //::---------------------------------------------------
 
-  private:
-		//::---------------------------------------------------
-		//:: Member Variables	
-		//::---------------------------------------------------
+  std::string getName() const {
+    return m_name;
+  }
 
-    // The participant's name
-    std::string m_name;
-    
-    // Th participant's unique ID
-    unsigned short m_id;
+  ChatRoom &getChatRoom() const {
+    return m_chatRoom;
+  }
 
-    // The total number of existing participants
-    static unsigned short st_totalId;
+  void setChatRoom(ChatRoom &m_chatRoom) {
+    Participant::m_chatRoom = m_chatRoom;
+  }
 
+  void setName(const std::string &m_name) {
+    Participant::m_name = m_name;
+  }
+
+  // Output as string
+  std::string getAsString() {
+    std::ostringstream oss;
+    oss << '[' << m_name << "]: ";
+    return oss.str();
+  }
+
+
+//::---------------------------------------------------
+  //::  Protected Interface
+  //::---------------------------------------------------
+
+  // Check if this member is still associated with the chat room
+
+
+private:
+  //::---------------------------------------------------
+  //:: Logging
+  //::---------------------------------------------------
+
+  friend std::ostream &operator<<(std::ostream &lhs, Participant &participant) {
+    return lhs << participant.getAsString();
+  }
+
+
+private:
+  //::---------------------------------------------------
+  //:: Member Variables
+  //::---------------------------------------------------
+
+  // The participant's name
+  std::string m_name;
+
+  // The chat room that this praticipant currently belongs to
+  ChatRoom &m_chatRoom;
 };

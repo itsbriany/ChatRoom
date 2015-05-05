@@ -1,13 +1,16 @@
 #include "ChatSession.hpp"
 #include <boost/bind.hpp>
+#include <boost/asio.hpp>
 
 //-----------------------------------------------------------------------------------
 // Constructor
-ChatSession::ChatSession(std::string clientName, boost::asio::ip::tcp::socket socket) : 
-  BaseClass(clientName),
-  m_socket(std::move(socket))
+ChatSession::ChatSession(std::string clientName, boost::asio::ip::tcp::socket socket, ChatRoom &chatRoom) :
+    BaseClass(clientName, chatRoom),
+    m_socket(std::move(socket))
 {
   BOOST_LOG_TRIVIAL(debug) << *this << "Created";
+  // Start the session
+  start();
 }
 
 // Destructor
@@ -18,22 +21,30 @@ ChatSession::~ChatSession() {
 //-----------------------------------------------------------------------------------
 // Participant override Interface
 
-// Write a message to the socket
+// Deliver a message to everyone in the chat room
 void
-ChatSession::deliver(std::string &message) {
-  m_socket.async_write_some(boost::asio::buffer(message, message.size()),
-      [this](const boost::system::error_code& error, std::size_t bytesTransferred){
-        
-        if (error) {
-          // Might want to specify the error here to that an expected error
-          // Can be handled
-          BOOST_LOG_TRIVIAL(error) << *this << error.message();
-          //Leave the room that this session belongs to
-        } 
-        
-        // TODO Add this message to the chat room so that it can be broadcasted
+ChatSession::deliver(const std::string &message) {
 
-      });
+  // TODO Do somethings more high level here such as check if the client is writing a message
+
+  ChatRoom::ParticipantVector participants(getChatRoom().getParticipantVector());
+
+  for (auto participant : participants) {
+    m_socket.async_write_some(boost::asio::buffer(message, message.size()),
+                              [&, this](const boost::system::error_code &error, std::size_t bytesTransferred) {
+
+                                if (error) {
+                                  // Might want to specify the error here to that an expected error
+                                  // Can be handled
+                                  BOOST_LOG_TRIVIAL(error) << *this << error.message();
+                                  //Leave the room that this session belongs to
+                                }
+                                // TODO Add this message to the chat room so that it can be broadcasted
+                                BOOST_LOG_TRIVIAL(debug) << *this << "Sent message: " << message;
+
+                              });
+  }
+
 }
 
 // Receives incoming messages
@@ -48,9 +59,11 @@ ChatSession::listen(std::string &message) {
 void
 ChatSession::start() {
   // Listen for messages in the room
-  std::string greeting(getName() + " has joined in");
-  listen(greeting);
+  const std::string greeting(getName() + "has joined the chat room!");
   deliver(greeting);
+  /*std::string greeting(getName() + " has joined in");
+  listen(greeting);
+  deliver(greeting);*/
 }
 
 //-----------------------------------------------------------------------------------
@@ -83,3 +96,9 @@ ChatSession::prv_handleReadMessages(const boost::system::error_code& error) {
   
 }
 
+//-----------------------------------------------------------------------------------------
+// Join a chat room
+void ChatSession::join(ChatRoom &chatRoom) {
+  BOOST_LOG_TRIVIAL(debug) << *this << " Joined chat room [" << chatRoom.getName() << std::endl;
+  setChatRoom(chatRoom);
+}
